@@ -3,6 +3,13 @@ import { fileURLToPath } from 'node:url';
 
 import { camelCase, kebabCase, pascalCase, snakeCase, titleCase } from '@kinobi-so/nodes';
 import nunjucks, { ConfigureOptions as NunJucksOptions } from 'nunjucks';
+import {
+    compile as sqrlCompile,
+    defaultConfig as sqrlDefaultConfig,
+    filters as sqrlFilters,
+    render as sqrlRender,
+    templates as sqrlTemplates,
+} from 'squirrelly';
 
 export function jsDocblock(docs: string[]): string {
     if (docs.length <= 0) return '';
@@ -23,4 +30,31 @@ export const render = (template: string, context?: object, options?: NunJucksOpt
     env.addFilter('titleCase', titleCase);
     env.addFilter('jsDocblock', jsDocblock);
     return env.render(template, context);
+};
+
+let isSquirrellyInitialized = false;
+function initSquirrelly() {
+    if (isSquirrellyInitialized) return;
+    sqrlFilters.define('pascalCase', pascalCase);
+    sqrlFilters.define('camelCase', camelCase);
+    sqrlFilters.define('snakeCase', snakeCase);
+    sqrlFilters.define('kebabCase', kebabCase);
+    sqrlFilters.define('titleCase', titleCase);
+    sqrlFilters.define('jsDocblock', jsDocblock);
+    isSquirrellyInitialized = true;
+}
+
+export const renderSquirrelly = (content: string, data: object = {}): string => {
+    initSquirrelly();
+    return sqrlRender(content, data, { useWith: true });
+};
+
+export const renderSquirrellyTemplate = (template: string, data: object = {}): string => {
+    initSquirrelly();
+    const content = sqrlTemplates.get(template);
+    return content(data, { ...sqrlDefaultConfig, useWith: true });
+};
+
+export const registerSquirellyTemplate = (template: string, content: string): void => {
+    sqrlTemplates.define(template, sqrlCompile(content, { useWith: true }));
 };

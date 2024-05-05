@@ -172,6 +172,9 @@ importers:
       prettier:
         specifier: ^3.2.5
         version: 3.2.5
+      squirrelly:
+        specifier: ^9.0.0
+        version: 9.0.0
     devDependencies:
       '@types/nunjucks':
         specifier: ^3.2.6
@@ -4395,6 +4398,11 @@ packages:
   /sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
     dev: true
+
+  /squirrelly@9.0.0:
+    resolution: {integrity: sha512-MutQSfwrpIxvdUOFJ8XOfRSioLy+9O10bmBVWLik4uzJkD5TbeNSTOCKqLjzZJVcgdJNyLc8JRFUN15qFlZx9Q==}
+    engines: {node: '>=6.0.0'}
+    dev: false
 
   /stack-utils@2.0.6:
     resolution: {integrity: sha512-XlkWvfIm6RmsWtNJx+uqtKLS8eqFbxUg0ZzLXqY0caEy9l7hruX8IpiDnjsLavoBgqCCR71TqWO8MaXYheJ3RQ==}
